@@ -1,42 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import PriorityQueue from "priority-queue-typescript";
-import { Observable, of } from 'rxjs';
 import { Parking } from './parking.interface';
 import { ParkingRequest, ParkingResponse } from "./parking.dto";
 
 let INIT_CAPACITY = 10
-let FreeSlots = new PriorityQueue<number>(INIT_CAPACITY, (a: number, b: number) => a - b);
+let AvailableSlots = new PriorityQueue<number>(INIT_CAPACITY, (a: number, b: number) => a - b);
 
 @Injectable()
 export class ParkingService implements Parking {
-    add(slotId: number): void {
-        FreeSlots.add(slotId);
+
+    addSlot(slotId: number): void {
+        AvailableSlots.add(slotId);
     }
 
-    create(request: ParkingRequest): ParkingResponse {
+    createSlot(request: ParkingRequest): ParkingResponse {
         for (let i = 1; i <= request.capacity; i++) {
-            FreeSlots.add(i);
+            AvailableSlots.add(i);
         }
-        return new ParkingResponse(FreeSlots.size())
+        return new ParkingResponse(AvailableSlots.size())
     }
 
-    update(request: ParkingRequest): ParkingResponse {
-        let size = FreeSlots.size();
+    updateSlot(request: ParkingRequest): ParkingResponse {
+        let size = AvailableSlots.size();
         for (let i = 1; i <= request.capacity; i++) {
-            FreeSlots.add(size + i);
+            AvailableSlots.add(size + i);
         }
-        return new ParkingResponse(FreeSlots.size())
+        return new ParkingResponse(AvailableSlots.size())
     }
 
-    getSlot(): number {
-        return FreeSlots.poll()
+    getFreeSlot(): number {
+        return AvailableSlots.poll()
     }
 
     size(): number {
-        return FreeSlots.size();
+        return AvailableSlots.size();
     }
 
     isSlotAvailable(): boolean {
-        return FreeSlots.size() != 0
+        return AvailableSlots.size() != 0
     }
 }
+
+// initializes the parking slots with given capacity
+let _ = new ParkingService().createSlot(new ParkingRequest("", INIT_CAPACITY))

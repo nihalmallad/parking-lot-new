@@ -1,12 +1,15 @@
 import { Length, IsNotEmpty, Min, Max } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ParkingRequest {
     @Length(5, 20)
     @IsNotEmpty()
+    @ApiProperty()
     name: string;
 
     @Min(1)
     @Max(1000)
+    @ApiProperty()
     capacity: number;
 
     constructor(name: string, capacity: number) {
@@ -16,8 +19,13 @@ export class ParkingRequest {
 }
 
 export class ParkingResponse {
+    @ApiProperty()
     total_slots: number;
+
+    @ApiProperty()
     allocated_slots: number;
+
+    @ApiProperty()
     free_slots: number;
     constructor(total_slots: number, allocated_slots?: number, free_slots?: number) {
         this.total_slots = total_slots;

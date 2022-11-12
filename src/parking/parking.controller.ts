@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { ParkingRequest, ParkingResponse } from "./parking.dto";
 import { ParkingService } from './parking.service';
 import { SlotService } from './slots/slots.service';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('parking')
 export class ParkingController {
@@ -11,6 +12,7 @@ export class ParkingController {
         private slotService: SlotService){}
 
     @Get()
+    @ApiResponse({ status: HttpStatus.OK, type: ParkingResponse, description: 'feth all the slots' })
     getParking(@Res() res: Response) {
         let resp = new ParkingResponse(
             this.parkingService.size() + this.slotService.size(),
@@ -20,7 +22,8 @@ export class ParkingController {
     }
 
     @Put()
-    updateParking(@Body() request: ParkingRequest): ParkingResponse {
-        return this.parkingService.update(request);
+    @ApiResponse({ status: HttpStatus.OK, type: ParkingResponse, description: 'returns the updated slots' })
+    updateParking(@Body() request: ParkingRequest, @Res() res: Response) {
+       res.status(HttpStatus.OK).json(this.parkingService.updateSlot(request));
     }
 }

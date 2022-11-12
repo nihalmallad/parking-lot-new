@@ -1,9 +1,9 @@
 import { SlotRequest, SlotResponse } from "src/parking/slots/slot.dto";
 
 export interface Slot {
-    allocate(request: SlotRequest): SlotResponse;
-    free(slotId: number): void;
-    get(): SlotRequest[];
-    getByColor(color: string): SlotRequest[];
+    allocateSlot(request: SlotRequest): SlotResponse;
+    freeSlot(slotId: number): void;
+    getAllSlots(): SlotRequest[];
+    getAllSlotsByColor(color: string): SlotRequest[];
     size(): number;
 }

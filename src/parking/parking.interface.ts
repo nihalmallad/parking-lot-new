@@ -2,10 +2,10 @@ import { Observable } from "rxjs";
 import { ParkingRequest, ParkingResponse } from "./parking.dto";
 
 export interface Parking {
-    add(slotId: number): void
-    create(request: ParkingRequest): ParkingResponse;
-    update(request: ParkingRequest): ParkingResponse;
-    getSlot(): number | null
+    addSlot(slotId: number): void
+    createSlot(request: ParkingRequest): ParkingResponse;
+    updateSlot(request: ParkingRequest): ParkingResponse;
+    getFreeSlot(): number | null
     size(): number
     isSlotAvailable(): boolean;
 }

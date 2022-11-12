@@ -9,15 +9,16 @@ let slots = new Map<number, SlotRequest>();
 @Injectable()
 export class SlotService implements Slot {
 
-    constructor(private parkingService: ParkingService){}
+    constructor(
+        private parkingService: ParkingService){}
 
     size(): number {
        return slots.size;
     }
 
-    allocate(request: SlotRequest): SlotResponse {
+    allocateSlot(request: SlotRequest): SlotResponse {
         if (this.parkingService.isSlotAvailable()) {
-            let slot_id = this.parkingService.getSlot();
+            let slot_id = this.parkingService.getFreeSlot();
             request.slot_no = slot_id
             slots.set(slot_id, request);
             return new SlotResponse(slot_id);
@@ -25,7 +26,7 @@ export class SlotService implements Slot {
         return new SlotResponse(-1);
     }
 
-    free(slotId: number): void {
+    freeSlot(slotId: number): void {
         // TODO: fix the delete
         slots.forEach((value: SlotRequest, key: number) => {
             console.log(value);
@@ -33,7 +34,7 @@ export class SlotService implements Slot {
       console.log(slots.delete(slotId));
     }
 
-    get(): SlotRequest[] {
+    getAllSlots(): SlotRequest[] {
         let data = new Array<SlotRequest>();
         slots.forEach((value: SlotRequest) => {
             data.push(value);
@@ -41,7 +42,7 @@ export class SlotService implements Slot {
         return data;
     }
 
-    getByColor(color: string): SlotRequest[] {
+    getAllSlotsByColor(color: string): SlotRequest[] {
         let data = new Array<SlotRequest>();
         slots.forEach((value: SlotRequest, key: number) => {
             if (value.color == color) {
