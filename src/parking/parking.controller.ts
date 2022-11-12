@@ -1,9 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Put } from '@nestjs/common';
 
 @Controller('parking')
 export class ParkingController {
     @Get()
-    getHello(): string {
-      return  "Hello Parking"
+    getParking(): string {
+        return ""
+    }
+
+    @Post()
+    createParking(): string {
+        return "";
+    }
+
+    @Put()
+    updateParking(): string {
+        return ""
     }
 }
