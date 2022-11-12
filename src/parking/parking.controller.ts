@@ -1,19 +1,23 @@
-import { Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Res } from '@nestjs/common';
+import { map, Observable } from 'rxjs';
+import { ParkingRequest, ParkingResponse } from "../dto/parking.dto";
+import { ParkingSvc } from './parking.service';
 
 @Controller('parking')
 export class ParkingController {
     @Get()
-    getParking(): string {
-        return ""
+    getParking(): number {
+        // TODO: return the object
+        return ParkingSvc.size();
     }
 
     @Post()
-    createParking(): string {
-        return "";
+    createParking(@Body() request: ParkingRequest): ParkingResponse{
+        return ParkingSvc.create(request);
     }
 
     @Put()
-    updateParking(): string {
-        return ""
+    updateParking(@Body() request: ParkingRequest): ParkingResponse {
+        return ParkingSvc.update(request);
     }
 }
