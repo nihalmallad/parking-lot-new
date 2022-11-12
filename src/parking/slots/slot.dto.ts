@@ -1,5 +1,6 @@
 import { Length, IsNotEmpty } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger';
+
 export class SlotRequest {
     slot_no: number | undefined;
 
