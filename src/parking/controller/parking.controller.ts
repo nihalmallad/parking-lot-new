@@ -3,14 +3,15 @@ import { Response } from 'express';
 
 import { ApiResponse } from '@nestjs/swagger';
 import { ParkingService } from '../service/parking.service';
-import { SlotService } from 'src/slot/service/slots.service';
+
 import { ParkingResponse, ParkingRequest } from '../dto/parking.dto';
+import { SlotService } from '../../slot/service/slot.service';
 
 @Controller('parking')
 export class ParkingController {
     constructor(
-        private parkingService: ParkingService,
-        private slotService: SlotService){}
+        public parkingService: ParkingService,
+        public slotService: SlotService){}
 
     @Get()
     @ApiResponse({ status: HttpStatus.OK, type: ParkingResponse, description: 'feth all the slots' })

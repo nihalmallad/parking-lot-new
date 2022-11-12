@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ParkingService } from 'src/parking/service/parking.service';
-import { SlotRequest, SlotResponse } from 'src/slot/dto/slot.dto';
-import { Slot } from './slots.interface';
+import { ParkingService } from '../../parking/service/parking.service';
+import { SlotRequest, SlotResponse } from '../dto/slot.dto';
+
+import { Slot } from './slot.interface';
 
 
 let AllocatedSlots = new Map<number, SlotRequest>();

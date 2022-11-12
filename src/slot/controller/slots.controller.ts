@@ -1,16 +1,16 @@
 import { Body, Controller, Delete, Get, Param, Post, HttpStatus, Query, Res, HttpCode } from '@nestjs/common';
-import { SlotRequest, SlotResponse } from 'src/slot/dto/slot.dto';
 
 import { Response } from 'express';
 import { ApiResponse } from '@nestjs/swagger';
-import { ParkingService } from 'src/parking/service/parking.service';
-import { SlotService } from '../service/slots.service';
+import { SlotService } from '../service/slot.service';
+import { ParkingService } from '../../parking/service/parking.service';
+import { SlotRequest, SlotResponse } from '../dto/slot.dto';
 
 @Controller('parking/slots')
 export class SlotsController {
     constructor(
-        private slotService: SlotService,
-        private parkingService: ParkingService) { }
+        public slotService: SlotService,
+        public parkingService: ParkingService) { }
 
     @Get()
     @ApiResponse({ status: HttpStatus.OK, type: SlotRequest, description: 'returns all the allocated slots or by color' })

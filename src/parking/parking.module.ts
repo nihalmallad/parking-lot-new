@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { SlotsController } from 'src/slot/controller/slots.controller';
-import { SlotService } from 'src/slot/service/slots.service';
+import { SlotsController } from '../slot/controller/slots.controller';
+import { SlotService } from '../slot/service/slot.service';
 
-import { SlotsModule } from '../slot/slots.module';
+
+import { SlotModule } from '../slot/slot.module';
 import { ParkingController } from './controller/parking.controller';
 import { ParkingService } from './service/parking.service';
 
 @Module({
   providers: [ParkingService, SlotService],
   controllers: [ParkingController, SlotsController],
-  imports: [SlotsModule]
+  imports: [SlotModule]
 })
 export class ParkingModule {}
