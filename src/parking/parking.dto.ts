@@ -1,4 +1,4 @@
-import { Length, IsNotEmpty, Min, Max} from 'class-validator'
+import { Length, IsNotEmpty, Min, Max } from 'class-validator'
 
 export class ParkingRequest {
     @Length(5, 20)

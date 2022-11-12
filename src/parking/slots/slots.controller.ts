@@ -1,27 +1,30 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { SlotRequest, SlotResponse } from 'src/parking/slots/slot.dto';
-import { ParkingSvc } from '../parking.service';
-import { SlotSvc } from './slots.service';
+import { ParkingService } from '../parking.service';
+import { SlotService } from './slots.service';
 
 @Controller('parking/slots')
 export class SlotsController {
+    constructor(private slotService: SlotService,
+        private parkingService: ParkingService){}
+
     @Get()
     getAllParkingSlotsByColor(@Query('color') color: string): SlotRequest[] {
         if (color == undefined || color == "") {
-            return SlotSvc.get();
+            return this.slotService.get();
         }
-        return SlotSvc.getByColor(color);
+        return this.slotService.getByColor(color);
     }
 
     @Post()
     createParkingSlot(@Body() request: SlotRequest): SlotResponse {
-        return SlotSvc.allocate(request);
+        return this.slotService.allocate(request);
     }
 
     @Delete(':id')
     freeParkingSlot(@Param('id') id: number) {
-        SlotSvc.free(id);
-        ParkingSvc.add(id);
+        this.slotService.free(id);
+        this.parkingService.add(id);
         return id;
     }
 }

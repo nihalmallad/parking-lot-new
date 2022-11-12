@@ -1,20 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { SlotRequest, SlotResponse } from 'src/parking/slots/slot.dto';
-import { ParkingSvc } from '../parking.service';
+import { ParkingService } from '../parking.service';
 import { Slot } from './slots.interface';
 
 
 let slots = new Map<number, SlotRequest>();
 
 @Injectable()
-export class SlotsService implements Slot {
+export class SlotService implements Slot {
+
+    constructor(private parkingService: ParkingService){}
+
     size(): number {
        return slots.size;
     }
 
     allocate(request: SlotRequest): SlotResponse {
-        if (ParkingSvc.isSlotAvailable()) {
-            let slot_id = ParkingSvc.getSlot();
+        if (this.parkingService.isSlotAvailable()) {
+            let slot_id = this.parkingService.getSlot();
             request.slot_no = slot_id
             slots.set(slot_id, request);
             return new SlotResponse(slot_id);
@@ -48,5 +51,3 @@ export class SlotsService implements Slot {
         return data;
     }
 }
-
-export let SlotSvc = new SlotsService();

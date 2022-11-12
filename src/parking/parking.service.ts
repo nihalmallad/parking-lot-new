@@ -40,5 +40,3 @@ export class ParkingService implements Parking {
         return FreeSlots.size() != 0
     }
 }
-
-export let ParkingSvc = new ParkingService();
