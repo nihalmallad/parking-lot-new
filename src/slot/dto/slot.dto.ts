@@ -6,17 +6,17 @@ export class SlotRequest {
 
     @IsNotEmpty()
     @Length(6, 10)
-    @ApiProperty()
+    @ApiProperty({example: "KA28Z1107"})
     reg_no: string;
 
     @IsNotEmpty()
     @Length(3, 10)
-    @ApiProperty()
+    @ApiProperty({example: "green"})
     color: string;
 
     @IsNotEmpty()
     @Length(3, 20)
-    @ApiProperty()
+    @ApiProperty({example: "car"})
     type: string;
 
     constructor(reg_no: string, color: string, type: string) {

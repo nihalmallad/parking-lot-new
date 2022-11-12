@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Put, Res, HttpStatus, Version } from '@nestjs/common';
 import { Response } from 'express';
-import { ParkingRequest, ParkingResponse } from "./parking.dto";
-import { ParkingService } from './parking.service';
-import { SlotService } from './slots/slots.service';
+
 import { ApiResponse } from '@nestjs/swagger';
+import { ParkingResponse, ParkingRequest } from 'src/parking/dto/parking.dto';
+import { ParkingService } from 'src/parking/service/parking.service';
+import { SlotService } from 'src/slot/service/slots.service';
 
 @Controller('parking')
 export class ParkingController {

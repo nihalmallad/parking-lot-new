@@ -14,6 +14,8 @@ async function bootstrap() {
     defaultVersion: ['1']
   })
 
+  app.enableCors()
+
   const config = new DocumentBuilder()
     .setTitle('Parking Lot')
     .setDescription('The Parking Lot API description')
@@ -23,7 +25,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
 
   await app.listen(3000);
 }

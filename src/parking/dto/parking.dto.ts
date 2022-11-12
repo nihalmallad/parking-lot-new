@@ -4,12 +4,12 @@ import { ApiProperty } from '@nestjs/swagger';
 export class ParkingRequest {
     @Length(5, 20)
     @IsNotEmpty()
-    @ApiProperty()
+    @ApiProperty({example: "finmo"})
     name: string;
 
     @Min(1)
     @Max(1000)
-    @ApiProperty()
+    @ApiProperty({example: 5})
     capacity: number;
 
     constructor(name: string, capacity: number) {

@@ -1,4 +1,4 @@
-import { SlotRequest, SlotResponse } from "src/parking/slots/slot.dto";
+import { SlotRequest, SlotResponse } from "src/slot/dto/slot.dto";
 
 export interface Slot {
     allocateSlot(request: SlotRequest): SlotResponse;

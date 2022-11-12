@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, HttpStatus, Query, Res, HttpCode } from '@nestjs/common';
-import { SlotRequest, SlotResponse } from 'src/parking/slots/slot.dto';
-import { ParkingService } from '../parking.service';
-import { SlotService } from './slots.service';
+import { SlotRequest, SlotResponse } from 'src/slot/dto/slot.dto';
+
 import { Response } from 'express';
 import { ApiResponse } from '@nestjs/swagger';
+import { ParkingService } from 'src/parking/service/parking.service';
+import { SlotService } from '../service/slots.service';
 
 @Controller('parking/slots')
 export class SlotsController {
@@ -33,10 +34,10 @@ export class SlotsController {
     }
 
     @Delete(':id')
-    @ApiResponse({ status: HttpStatus.OK, description: 'returns when the slot is freed' })
+    @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'returns when the slot is freed' })
     freeParkingSlot(@Param('id') id: number, @Res() res: Response) {
-        this.slotService.freeSlot(id);
-        this.parkingService.addSlot(id);
-        res.status(HttpStatus.OK)
+        this.slotService.freeSlot(Number(id));
+        this.parkingService.addSlot(Number(id));
+        res.status(HttpStatus.NO_CONTENT).send()
     }
 }

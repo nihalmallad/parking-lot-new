@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ParkingService } from './parking.service';
-import { ParkingController } from './parking.controller';
-import { SlotsController } from './slots/slots.controller';
-import { SlotService } from './slots/slots.service';
-import { SlotsModule } from './slots/slots.module';
+import { SlotsController } from 'src/slot/controller/slots.controller';
+import { SlotService } from 'src/slot/service/slots.service';
+
+import { SlotsModule } from '../slot/slots.module';
+import { ParkingController } from './controller/parking.controller';
+import { ParkingService } from './service/parking.service';
 
 @Module({
   providers: [ParkingService, SlotService],

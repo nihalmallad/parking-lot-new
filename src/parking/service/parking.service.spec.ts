@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ParkingRequest } from './parking.dto';
+import { ParkingRequest } from '../dto/parking.dto';
 import { ParkingService } from './parking.service';
 
 describe('ParkingService', () => {
