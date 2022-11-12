@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { ParkingRequest, ParkingResponse } from "../dto/parking.dto";
+import { ParkingRequest, ParkingResponse } from "./parking.dto";
 
 export interface Parking {
     add(slotId: number): void

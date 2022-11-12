@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import PriorityQueue from "priority-queue-typescript";
 import { Observable, of } from 'rxjs';
 import { Parking } from './parking.interface';
-import { ParkingRequest, ParkingResponse } from "../dto/parking.dto";
+import { ParkingRequest, ParkingResponse } from "./parking.dto";
 
 let INIT_CAPACITY = 10
 let FreeSlots = new PriorityQueue<number>(INIT_CAPACITY, (a: number, b: number) => a - b);

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SlotRequest, SlotResponse } from 'src/dto/slots.dto';
+import { SlotRequest, SlotResponse } from 'src/parking/slots/slot.dto';
 import { ParkingSvc } from '../parking.service';
 import { Slot } from './slots.interface';
 
@@ -8,9 +8,13 @@ let slots = new Map<number, SlotRequest>();
 
 @Injectable()
 export class SlotsService implements Slot {
+    size(): number {
+       return slots.size;
+    }
+
     allocate(request: SlotRequest): SlotResponse {
         if (ParkingSvc.isSlotAvailable()) {
-            let slot_id = Number(ParkingSvc.getSlot());
+            let slot_id = ParkingSvc.getSlot();
             request.slot_no = slot_id
             slots.set(slot_id, request);
             return new SlotResponse(slot_id);
@@ -19,15 +23,17 @@ export class SlotsService implements Slot {
     }
 
     free(slotId: number): void {
-        if (slots.has(slotId)) {
-            slots.delete(slotId)
-        }
+        // TODO: fix the delete
+        slots.forEach((value: SlotRequest, key: number) => {
+            console.log(value);
+        });
+      console.log(slots.delete(slotId));
     }
 
     get(): SlotRequest[] {
         let data = new Array<SlotRequest>();
         slots.forEach((value: SlotRequest) => {
-            data.push(value)
+            data.push(value);
         });
         return data;
     }
@@ -36,10 +42,11 @@ export class SlotsService implements Slot {
         let data = new Array<SlotRequest>();
         slots.forEach((value: SlotRequest, key: number) => {
             if (value.color == color) {
-                data.push(value)
+                data.push(value);
             }
         });
         return data;
     }
 }
 
+export let SlotSvc = new SlotsService();
