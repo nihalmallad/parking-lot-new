@@ -14,8 +14,6 @@ async function bootstrap() {
     defaultVersion: ['1']
   })
 
-  app.enableCors()
-
   const config = new DocumentBuilder()
     .setTitle('Parking Lot')
     .setDescription('The Parking Lot API description')

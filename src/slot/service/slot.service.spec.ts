@@ -54,4 +54,12 @@ describe('SlotService', () => {
     expect(slotService.getAllSlotsByColor("green").length).toEqual(0);
   });
 
+  it('should try to delete non-existing slot id', () => {
+    let [resp] = slotService.allocateSlot(new SlotRequest("KA281234", "green", "car"));
+    expect(slotService.getAllSlots().length).toEqual(1);
+
+    slotService.freeSlot(1234);
+    expect(slotService.getAllSlots().length).toEqual(1);
+  });
+
 });

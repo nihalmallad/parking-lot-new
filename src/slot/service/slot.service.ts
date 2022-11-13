@@ -36,9 +36,11 @@ export class SlotService implements Slot {
     }
 
     freeSlot(slotId: number): void {
-        let regno = AllocatedSlots.get(slotId).reg_no;
-        Vehicles.delete(regno);
-        AllocatedSlots.delete(slotId);
+        if (AllocatedSlots.has(Number(slotId))) {
+            let regno = AllocatedSlots.get(slotId).reg_no;
+            Vehicles.delete(regno);
+            AllocatedSlots.delete(slotId);
+        }
     }
 
     getAllSlots(): SlotRequest[] {
