@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Res, HttpStatus, Version } from '@nestjs/common';
+import { Body, Controller, Get, Put, HttpStatus, Res } from '@nestjs/common';
 import { Response } from 'express';
 
 import { ApiResponse } from '@nestjs/swagger';
@@ -15,17 +15,17 @@ export class ParkingController {
 
     @Get()
     @ApiResponse({ status: HttpStatus.OK, type: ParkingResponse, description: 'feth all the slots' })
-    getParking(@Res() res: Response) {
+    getParkings(@Res() res: Response) {
         let resp = new ParkingResponse(
             this.parkingService.size() + this.slotService.size(),
             this.slotService.size(),
             this.parkingService.size())
-        res.status(HttpStatus.OK).json(resp)
+        return res.status(HttpStatus.OK).json(resp)
     }
 
     @Put()
     @ApiResponse({ status: HttpStatus.OK, type: ParkingResponse, description: 'returns the updated slots' })
-    updateParking(@Body() request: ParkingRequest, @Res() res: Response) {
-       res.status(HttpStatus.OK).json(this.parkingService.updateSlot(request));
+    updateParkings(@Body() request: ParkingRequest, @Res() res: Response) {
+       return res.status(HttpStatus.OK).json(this.parkingService.updateSlot(request));
     }
 }
