@@ -34,3 +34,9 @@ export class SlotResponse {
         this.ticket_id = ticket_id;
     }
 }
+
+export enum SlotErrorCode {
+    NONE,
+    FULL,
+    EXISTS,
+  }
