@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, HttpStatus, Query, Res, HttpCode } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, HttpStatus, Query, Res, ParseIntPipe } from '@nestjs/common';
 
 import { Response } from 'express';
 import { ApiResponse } from '@nestjs/swagger';
@@ -18,7 +18,7 @@ export class SlotsController {
     @ApiResponse({ status: HttpStatus.OK, type: SlotRequest, description: 'returns all the allocated slots or by color' })
     getAllParkingSlotsByColor(@Query('color') color: string, @Res() res: Response) {
         if (color == undefined || color == "") {
-          return res.status(HttpStatus.OK).json(this.slotService.getAllSlots());
+            return res.status(HttpStatus.OK).json(this.slotService.getAllSlots());
         }
         return res.status(HttpStatus.OK).json(this.slotService.getAllSlotsByColor(color));
     }
@@ -28,11 +28,11 @@ export class SlotsController {
     @ApiResponse({ status: HttpStatus.UNPROCESSABLE_ENTITY, type: Error, description: 'return when the parking slot is full or same registration vehicle exist' })
     createParkingSlot(@Body() request: SlotRequest, @Res() res: Response) {
         let [slotRes, error] = this.slotService.allocateSlot(request);
-        if(error == SlotErrorCode.FULL){
+        if (error == SlotErrorCode.FULL) {
             return res.status(HttpStatus.UNPROCESSABLE_ENTITY).json(new Error(Err_Parking_Full))
         }
 
-        if(error == SlotErrorCode.EXISTS){
+        if (error == SlotErrorCode.EXISTS) {
             return res.status(HttpStatus.UNPROCESSABLE_ENTITY).json(new Error(Err_Same_Vehicle_Number))
         }
 
@@ -41,7 +41,8 @@ export class SlotsController {
 
     @Delete(':id')
     @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'returns when the slot is freed' })
-    freeParkingSlot(@Param('id') id: number, @Res() res: Response) {
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST})
+    freeParkingSlot(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
         this.slotService.freeSlot(Number(id));
         this.parkingService.addSlot(Number(id));
         return res.status(HttpStatus.NO_CONTENT).send()
